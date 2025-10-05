@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "CosmicForge Mobile Doctor",
+    "slug": "cosmicforge-mobile-doctor",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.cosmicforgedoctor",
+      "supportsTablet": true,
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.yourcompany.cosmicforgedoctor",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "plugins": [
+      "expo-build-properties"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "37263244-f2eb-41a4-b48c-72993b5cc6d3"
+      }
+    },
+    "owner": "kevinejiofor"
+  }
+}

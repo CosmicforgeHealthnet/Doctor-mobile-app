@@ -1,0 +1,60 @@
+# Expo
+.expo/
+.expo-shared/
+web-build/
+dist/
+*.tgz
+
+# EAS Build
+.eas/
+eas.json.local
+.build/
+
+# Node.js
+node_modules/
+npm-debug.*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+*.apk
+*.aab
+*.ipa
+*.keystore
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Android
+android/
+.gradle/
+local.properties
+
+# iOS
+ios/
+Pods/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.eslintcache
+
+# Coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/
