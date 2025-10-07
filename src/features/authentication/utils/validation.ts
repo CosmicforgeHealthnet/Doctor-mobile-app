@@ -72,9 +72,9 @@ export const validateSignupForm = (formData: SignupFormData): SignupFormErrors =
    }
 
    // Terms validation
-   if (!formData.agreeToTerms) {
-      errors.agreeToTerms = "You must agree to the terms and privacy policy";
-   }
+   //  if (!formData.agreeToTerms) {
+   //     errors.agreeToTerms = "You must agree to the terms and privacy policy";
+   //  }
 
    return errors;
 };

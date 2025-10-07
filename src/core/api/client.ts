@@ -29,14 +29,13 @@ class ApiClient {
 
    constructor() {
       this.client = axios.create({
-         baseURL: `${API_BASE_URL}`,
+         baseURL: "https://backend.cosmicforge-healthnet.com",
          timeout: API_TIMEOUT,
          headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
          },
       });
-
       this.setupInterceptors();
    }
 
@@ -119,25 +118,40 @@ class ApiClient {
    }
 
    private handleError(error: AxiosError): ApiError {
+      // Request made & server responded
       if (error.response) {
-         // Server responded with error
+         const payload = error.response.data as any;
+
+         // normalize message
+         let message: string | undefined;
+
+         if (Array.isArray(payload?.message)) {
+            // e.g. ["email must be an email", "password too short"]
+            message = payload.message.join(", ");
+         } else if (typeof payload?.message === "string") {
+            message = payload.message;
+         } else if (typeof payload?.error === "string") {
+            message = payload.error;
+         } else if (payload?.errors && typeof payload.errors === "object") {
+            // e.g. { errors: { email: ["already taken"] } }
+            const first = Object.values(payload.errors).flat()[0];
+            message = typeof first === "string" ? first : undefined;
+         }
+
          return {
-            message: (error.response.data as any)?.message || "An error occurred",
+            message: message || "An error occurred",
             statusCode: error.response.status,
-            errors: (error.response.data as any)?.errors,
-         };
-      } else if (error.request) {
-         // Request made but no response
-         return {
-            message: "Network error. Please check your connection.",
-            statusCode: 0,
-         };
-      } else {
-         // Something else happened
-         return {
-            message: error.message || "An unexpected error occurred",
+            errors: payload?.errors, // keep the structured errors if present
          };
       }
+
+      // Request made but no response
+      if (error.request) {
+         return { message: "Network error. Please check your connection.", statusCode: 0 };
+      }
+
+      // Something else
+      return { message: error.message || "An unexpected error occurred" };
    }
 
    // HTTP Methods
@@ -147,6 +161,8 @@ class ApiClient {
    }
 
    async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+      const fullUrl = (this.client.defaults.baseURL || "") + url;
+
       const response: AxiosResponse<T> = await this.client.post(url, data, config);
       return response.data;
    }
@@ -192,29 +208,7 @@ class ApiClient {
          },
       });
    }
-
-   // Get the axios instance for advanced usage
-   getClient(): AxiosInstance {
-      return this.client;
-   }
 }
 
 // Export singleton instance
 export const apiClient = new ApiClient();
-
-// Export convenient methods
-export const api = {
-   get: <T>(url: string, config?: AxiosRequestConfig) => apiClient.get<T>(url, config),
-   post: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      apiClient.post<T>(url, data, config),
-   put: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      apiClient.put<T>(url, data, config),
-   patch: <T>(url: string, data?: any, config?: AxiosRequestConfig) =>
-      apiClient.patch<T>(url, data, config),
-   delete: <T>(url: string, config?: AxiosRequestConfig) => apiClient.delete<T>(url, config),
-   uploadFile: <T>(
-      url: string,
-      file: { uri: string; name: string; type: string },
-      additionalData?: Record<string, any>,
-   ) => apiClient.uploadFile<T>(url, file, additionalData),
-};

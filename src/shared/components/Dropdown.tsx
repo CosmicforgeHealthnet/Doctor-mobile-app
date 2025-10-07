@@ -89,7 +89,7 @@ export function Dropdown({
             >
                {/* Modal Content */}
                <Pressable
-                  className="bg-background w-full rounded-2xl overflow-hidden shadow-lg"
+                  className="bg-background  rounded-2xl overflow-hidden shadow-lg"
                   style={{ maxHeight: height * 0.7 }}
                   onPress={(e) => e.stopPropagation()}
                >
@@ -101,13 +101,8 @@ export function Dropdown({
                   </View>
 
                   {/* Options List */}
-                  <ScrollView
-                     className="flex-1"
-                     showsVerticalScrollIndicator={true}
-                     persistentScrollbar={true}
-                  >
+                  <ScrollView className="flex-1">
                      {options.map((option, index) => {
-                        console.log(option, "this is an option");
                         const isSelected = value === option;
                         const isPlaceholder = option === "Select Department (If applicable)";
 

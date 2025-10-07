@@ -1,9 +1,14 @@
-import { api } from "@/core/api/client";
+import { apiClient } from "@/core/api/client";
 
 export interface SignupRequest {
-   name: string;
+   fullName: string;
    email: string;
    department: string;
+   password: string;
+}
+
+export interface LoginRequest {
+   email: string;
    password: string;
 }
 
@@ -20,26 +25,26 @@ export interface AuthResponse {
 
 export const authService = {
    signup: async (data: SignupRequest): Promise<AuthResponse> => {
-      return api.post<AuthResponse>("/auth/signup", data);
+      return apiClient.post<AuthResponse>("/auth/signup", data);
    },
 
-   login: async (email: string, password: string): Promise<AuthResponse> => {
-      return api.post<AuthResponse>("/auth/login", { email, password });
+   login: async (data: LoginRequest): Promise<AuthResponse> => {
+      return apiClient.post<AuthResponse>("/auth/login", data);
    },
 
    logout: async (): Promise<void> => {
-      return api.post("/auth/logout");
+      return apiClient.post("/auth/logout");
    },
 
    verifyEmail: async (token: string): Promise<void> => {
-      return api.post("/auth/verify-email", { token });
+      return apiClient.post("/auth/verify-email", { token });
    },
 
    forgotPassword: async (email: string): Promise<void> => {
-      return api.post("/auth/forgot-password", { email });
+      return apiClient.post("/auth/forgot-password", { email });
    },
 
    resetPassword: async (token: string, password: string): Promise<void> => {
-      return api.post("/auth/reset-password", { token, password });
+      return apiClient.post("/auth/reset-password", { token, password });
    },
 };

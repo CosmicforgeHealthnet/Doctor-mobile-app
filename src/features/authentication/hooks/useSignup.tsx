@@ -37,6 +37,8 @@ export const useSignup = () => {
          // Validate form
          const validationErrors = validateSignupForm(formData);
 
+         console.log(validationErrors);
+
          if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
@@ -47,16 +49,18 @@ export const useSignup = () => {
 
          // Call signup API
          const response = await authService.signup({
-            name: formData.fullName,
+            fullName: formData.fullName,
             email: formData.email,
             department: formData.department,
             password: formData.password,
          });
 
+         console.log(response);
+
          // Store auth data
-         await storage.setToken(response.token);
-         await storage.setRefreshToken(response.refreshToken);
-         await storage.setUserData(response.user);
+         //  await storage.setToken(response.token);
+         //  await storage.setRefreshToken(response.refreshToken);
+         //  await storage.setUserData(response.user);
 
          // Show success message
          Alert.alert("Success", "Account created successfully!", [
