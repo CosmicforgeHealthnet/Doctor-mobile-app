@@ -13,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useLogin } from "@/features/authentication/hooks/useLogin";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Input } from "@/shared/components/Input";
+import { Button } from "@/shared/components/Button";
 
 function LoginScreen() {
    const {
@@ -26,6 +27,7 @@ function LoginScreen() {
       navigateToSignup,
       navigateToForgotPassword,
       loadRememberedEmail,
+      getDeviceFingerPrint,
    } = useLogin();
 
    useEffect(() => {
@@ -109,13 +111,13 @@ function LoginScreen() {
 
                      {/* Remember Me & Forgot Password Row */}
                      <View className="flex-row justify-between items-center mb-lg">
-                        <Checkbox
+                        {/* <Checkbox
                            checked={formData.rememberMe}
                            onChange={(checked) => updateField("rememberMe", checked)}
                            label="Remember Me"
                            disabled={loading}
                            className="mb-0"
-                        />
+                        /> */}
 
                         <TouchableOpacity
                            onPress={navigateToForgotPassword}
@@ -132,6 +134,8 @@ function LoginScreen() {
                         title={loading ? "Signing In..." : "Sign In"}
                         onPress={handleLogin}
                         disabled={loading}
+                        loading={loading}
+                        variant="primary"
                      />
 
                      {/* Divider */}

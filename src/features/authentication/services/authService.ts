@@ -10,6 +10,7 @@ export interface SignupRequest {
 export interface LoginRequest {
    email: string;
    password: string;
+   deviceFingerprint: string;
 }
 
 export interface AuthResponse {
@@ -29,6 +30,7 @@ export const authService = {
    },
 
    login: async (data: LoginRequest): Promise<AuthResponse> => {
+      console.log(data, "this is the data");
       return apiClient.post<AuthResponse>("/auth/login", data);
    },
 

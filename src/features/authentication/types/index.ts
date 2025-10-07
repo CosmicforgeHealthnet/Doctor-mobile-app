@@ -20,6 +20,7 @@ export interface LoginFormData {
    email: string;
    password: string;
    rememberMe: boolean;
+   deviceFingerprint: string;
 }
 
 export interface LoginFormErrors {
@@ -36,7 +37,7 @@ export interface User {
 }
 
 export interface AuthResponse {
-   token: string;
+   accessToken: string;
    refreshToken: string;
-   user: User;
+   payload: User;
 }

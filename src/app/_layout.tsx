@@ -1,6 +1,6 @@
 // src/app/_layout.tsx
 import "../global.css";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "@/shared/hooks/useFonts";
@@ -22,7 +22,10 @@ export default function RootLayout() {
 
    return (
       <Stack screenOptions={{ headerShown: false }}>
-         <Stack.Screen name="index" />
+         <Stack.Screen
+            name="index"
+            options={{ headerShown: false }}
+         />
          <Stack.Screen name="onboarding" />
          <Stack.Screen name="(auth)" />
          <Stack.Screen name="(tabs)" />

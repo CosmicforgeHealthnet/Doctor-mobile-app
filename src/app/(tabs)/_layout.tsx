@@ -1,45 +1,51 @@
 // src/app/(tabs)/_layout.tsx
-import { Tabs } from "expo-router";
+import { Tabs as BottomNavigation } from "expo-router";
 import { View } from "react-native";
+import { Clock, Package, PlusCircle, User } from "lucide-react-native";
 
 export default function TabLayout() {
    return (
-      <Tabs screenOptions={{ headerShown: false }}>
-         <Tabs.Screen
+      <BottomNavigation screenOptions={{ headerShown: false }}>
+         <BottomNavigation.Screen
             name="index"
             options={{
                title: "Home",
-               tabBarLabel: "Home",
+               tabBarIcon: ({ color, size }) => (
+                  <Package
+                     color={color}
+                     size={size}
+                  />
+               ),
             }}
          />
-         <Tabs.Screen
+         <BottomNavigation.Screen
             name="appointments"
             options={{
                title: "Appointments",
                tabBarLabel: "Appointments",
             }}
          />
-         <Tabs.Screen
+         <BottomNavigation.Screen
             name="messages"
             options={{
                title: "Messages",
                tabBarLabel: "Messages",
             }}
          />
-         <Tabs.Screen
+         <BottomNavigation.Screen
             name="notifications"
             options={{
                title: "Notifications",
                tabBarLabel: "Notifications",
             }}
          />
-         <Tabs.Screen
+         <BottomNavigation.Screen
             name="profile"
             options={{
                title: "Profile",
                tabBarLabel: "Profile",
             }}
          />
-      </Tabs>
+      </BottomNavigation>
    );
 }

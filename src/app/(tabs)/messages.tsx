@@ -1,7 +1,12 @@
 import React from "react";
+import { Text, View } from "react-native";
 
 const Messages = () => {
-   return <div>Messages</div>;
+   return (
+      <View>
+         <Text>Messages</Text>
+      </View>
+   );
 };
 
 export default Messages;

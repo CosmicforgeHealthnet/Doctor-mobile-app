@@ -10,6 +10,7 @@ import { storage } from "@/core/storage";
 const initialFormData: LoginFormData = {
    email: "",
    password: "",
+   deviceFingerprint: "",
    rememberMe: false,
 };
 
@@ -19,6 +20,10 @@ export const useLogin = () => {
    const [errors, setErrors] = useState<LoginFormErrors>({});
    const [loading, setLoading] = useState(false);
    const [showPassword, setShowPassword] = useState(false);
+
+   const getDeviceFingerPrint = async (): Promise<any> => {
+      return "Hi, John Doe";
+   };
 
    const updateField = <K extends keyof LoginFormData>(field: K, value: LoginFormData[K]) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
@@ -45,12 +50,15 @@ export const useLogin = () => {
          const response = await authService.login({
             email: formData.email,
             password: formData.password,
+            deviceFingerprint: "12345",
          });
 
+         console.log(response);
+
          // Store auth data
-         await storage.setToken(response.token);
+         await storage.setToken(response.accessToken);
          await storage.setRefreshToken(response.refreshToken);
-         await storage.setUserData(response.user);
+         await storage.setUserData(response.payload);
 
          // Store remember me preference
          if (formData.rememberMe) {
@@ -83,7 +91,7 @@ export const useLogin = () => {
    };
 
    const navigateToSignup = () => {
-      router.push("/(auth)/signup");
+      router.push("/(auth)/register");
    };
 
    const navigateToForgotPassword = () => {
@@ -119,5 +127,6 @@ export const useLogin = () => {
       navigateToSignup,
       navigateToForgotPassword,
       loadRememberedEmail,
+      getDeviceFingerPrint,
    };
 };
